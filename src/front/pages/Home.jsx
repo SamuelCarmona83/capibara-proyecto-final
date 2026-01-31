@@ -30,18 +30,11 @@ export const Home = () => {
         } catch (error) {
             console.error("Error cargando productos:", error);
         }
-    }
-
-    useEffect(() => {
-        // Ejecutamos la función apenas carga el componente
-        loadProducts();
-    }, []);
-
-	}
+    };
 
 	useEffect(() => {
-		loadMessage()
-	}, [])
+		loadProducts()
+	}, []);
 
 	return (
 		<div className="container mt-5">
@@ -68,60 +61,97 @@ export const Home = () => {
         </div>
       </div>
 
-	  <div id="carouselExampleCaptions" class="carousel slide">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <div
+  id="carouselExampleCaptions"
+  className="carousel slide"
+  data-bs-ride="carousel"
+>
+  <div className="carousel-indicators">
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to="0"
+      className="active"
+      aria-current="true"
+      aria-label="Slide 1"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to="1"
+      aria-label="Slide 2"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to="2"
+      aria-label="Slide 3"
+    ></button>
   </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img 
-  src="https://images.unsplash.com/photo-1565379793984-e65b51b33b37?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  className="d-block mx-auto img-fluid"
-  style={{height: "450px", objectFit: "cover"}}
-  alt="Converse shoes"
-  />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
+
+  <div className="carousel-inner">
+    <div className="carousel-item active">
+      <img
+        src="https://images.unsplash.com/photo-1603243287375-d59753944627?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        className="d-block w-100"
+        style={{ height: "450px", objectFit: "cover" }}
+        alt="Converse shoes"
+      />
+      <div className="carousel-caption d-none d-md-block">
+        <h5>First slide</h5>
+        <p>Urban style sneakers.</p>
       </div>
     </div>
-    <div class="carousel-item">
-      <img 
-  src="https://images.unsplash.com/photo-1670181830393-877c92daa0e3?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  className="d-block w-100"
-  style={{height: "fixed", objectFit: "cover"}}
-  alt="Converse shoes"
-  />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
+
+    <div className="carousel-item">
+      <img
+        src="https://images.unsplash.com/photo-1527128296579-fce16948f060?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        className="d-block w-100"
+        style={{ height: "450px", objectFit: "cover" }}
+        alt="Sneakers"
+      />
+      <div className="carousel-caption d-none d-md-block">
+        <h5>Second slide</h5>
+        <p>Comfort and design.</p>
       </div>
     </div>
-    <div class="carousel-item">
-         <img 
-  src="https://images.unsplash.com/photo-1670181830277-e6db6b34cc3f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  className="d-block w-100"
-  style={{height: "450px", objectFit: "cover"}}
-  alt="Converse shoes"
-  />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
+
+    <div className="carousel-item">
+      <img
+        src="https://images.unsplash.com/photo-1670181830277-e6db6b34cc3f?q=80&w=1200&auto=format&fit=crop"
+        className="d-block w-100"
+        style={{ height: "450px", objectFit: "cover" }}
+        alt="Shoes"
+      />
+      <div className="carousel-caption d-none d-md-block">
+        <h5>Third slide</h5>
+        <p>For everyday wear.</p>
       </div>
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
+
+  <button
+    className="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="prev"
+  >
+    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
+
+  <button
+    className="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="next"
+  >
+    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Next</span>
   </button>
 </div>
 
+
     </div>
 	);
-}; 
+};
