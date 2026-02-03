@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
 
-# --- USER MODEL ---
+
 class User(db.Model):
     __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -13,18 +13,15 @@ class User(db.Model):
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     is_active: Mapped[bool] = mapped_column(default=True)
 
-    # A user can have many orders
-    # orders: Mapped[List["Order"]] = relationship(back_populates="user")
+    profile: Mapped[Optional["Profile"]] = relationship(back_populates="user", uselist=False)
 
     def serialize(self):
         return {
             "id": self.id,
-            "email": self.email,
-            "orders": [order.id for order in self.orders],
-
+            "email": self.email
         }
 
-# --- SHOE (PRODUCT) MODEL ---
+
 class Shoe(db.Model):
     __tablename__ = "shoe"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -33,18 +30,15 @@ class Shoe(db.Model):
     price: Mapped[float] = mapped_column(Float, nullable=False)
     img_url: Mapped[Optional[str]] = mapped_column(String(500))
 
-    # Link to inventory (sizes)
-    # inventory: Mapped[List["Stock"]] = relationship(back_populates="shoe", cascade="all, delete-orphan")
-
     def serialize(self):
         return {
             "id": self.id,
             "brand": self.brand,
             "model_name": self.model_name,
             "price": self.price,
-            "img_url": self.img_url,
-            "available_stock": [item.serialize() for item in self.inventory]
+            "img_url": self.img_url
         }
+
 
 class Profile(db.Model):
     __tablename__ = "profile"
@@ -53,8 +47,9 @@ class Profile(db.Model):
     last_name: Mapped[str] = mapped_column(String(120), nullable=False)
     phone_number: Mapped[Optional[str]] = mapped_column(String(20))
     address: Mapped[Optional[str]] = mapped_column(String(500))
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-    user: Mapped["User"] = relationship()
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
+    user: Mapped["User"] = relationship(back_populates="profile")
+
     def serialize(self):
         return {
             "id": self.id,
@@ -64,17 +59,6 @@ class Profile(db.Model):
             "address": self.address,
             "user_id": self.user_id
         }
-class login(db.Model):
-    __tablename__ = "login"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(String(255), nullable=False)
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email
-        }   
       
 
 # # --- STOCK MODEL (SIZES) ---
