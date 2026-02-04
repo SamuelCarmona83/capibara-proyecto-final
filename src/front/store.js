@@ -33,7 +33,12 @@ export const initialStore = () => {
       }
     ],
     cart: [],
-    user: null,
+    user: {
+      name: "Test User",
+      email: "test@email.com",
+      bio: "This is a test user.",
+      avatar_url: "https://via.placeholder.com/250"
+    },
     token: null,
   };
 };
@@ -45,6 +50,12 @@ export default function storeReducer(store, action = {}) {
         ...store,
         user: action.payload.user,
         token: action.payload.token,
+      };
+
+      case "update_user":
+      return {
+        ...store,
+        user: action.payload,
       };
 
     case "set_hello":
