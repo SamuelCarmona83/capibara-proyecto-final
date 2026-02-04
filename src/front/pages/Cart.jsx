@@ -1,6 +1,6 @@
 import React from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
-import { CartItem } from "../components/CartItem";
+import { CartItem } from "../components/CardItem";
 import { Link } from "react-router-dom";
 
 export const Cart = () => {
