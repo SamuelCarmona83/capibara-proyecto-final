@@ -33,12 +33,7 @@ export const initialStore = () => {
       }
     ],
     cart: [],
-    user: {
-      name: "Test User",
-      email: "test@email.com",
-      bio: "This is a test user.",
-      avatar_url: "https://via.placeholder.com/250"
-    },
+    user: null,
     token: null,
   };
 };
