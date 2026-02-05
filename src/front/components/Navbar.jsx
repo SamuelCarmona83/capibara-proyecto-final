@@ -74,9 +74,10 @@ export const Navbar = () => {
                             <hr />
 
                             <li className="nav-item">
-                                <Link className="nav-link" to="/account" data-bs-dismiss="offcanvas"> 
+                                <Link className="nav-link" to="/profile">
                                 <i className="fa-solid fa-user"></i> My Account
                                 </Link>
+
                             </li>
 
                             <li className="nav-item">

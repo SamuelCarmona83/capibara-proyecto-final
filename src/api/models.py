@@ -9,11 +9,14 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     is_active: Mapped[bool] = mapped_column(default=True)
 
-    profile: Mapped[Optional["Profile"]] = relationship(back_populates="user", uselist=False)
+    profile: Mapped[Optional["Profile"]] = relationship(
+        back_populates="user", uselist=False)
+    cart_items: Mapped[List["Cart"]] = relationship(back_populates="user")
 
     def serialize(self):
         return {
@@ -59,7 +62,59 @@ class Profile(db.Model):
             "address": self.address,
             "user_id": self.user_id
         }
-      
+
+
+class Cart(db.Model):
+    __tablename__ = "cart"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
+    user: Mapped["User"] = relationship(back_populates="cart_items")
+    items: Mapped[List["CartItem"]] = relationship(
+        back_populates="cart", cascade="all, delete-orphan")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "items": [item.serialize() for item in self.items]
+        }
+
+
+class CartItem(db.Model):
+    __tablename__ = "cart_item"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    quantity: Mapped[int] = mapped_column(Integer, default=1)
+
+    cart_id: Mapped[int] = mapped_column(ForeignKey("cart.id"), nullable=False)
+    shoe_id: Mapped[int] = mapped_column(ForeignKey("shoe.id"), nullable=False)
+
+    cart: Mapped["Cart"] = relationship(back_populates="items")
+    shoe: Mapped["Shoe"] = relationship()
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "quantity": self.quantity,
+            "cart_id": self.cart_id,
+            "shoe_id": self.shoe_id
+        }
+
+
+class UserInfo(db.Model):
+    __tablename__ = "user_info"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    full_name: Mapped[str] = mapped_column(String(120), nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
+    address: Mapped[Optional[str]] = mapped_column(String(500))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "full_name": self.full_name,
+            "email": self.email,
+            "address": self.address
+        }
 
 # # --- STOCK MODEL (SIZES) ---
 # class Stock(db.Model):
@@ -67,7 +122,7 @@ class Profile(db.Model):
 #     id: Mapped[int] = mapped_column(primary_key=True)
 #     size: Mapped[float] = mapped_column(Float, nullable=False)
 #     quantity: Mapped[int] = mapped_column(Integer, default=0)
-    
+
 #     shoe_id: Mapped[int] = mapped_column(ForeignKey("shoe.id"))
 #     shoe: Mapped["Shoe"] = relationship(back_populates="inventory")
 
@@ -79,7 +134,7 @@ class Profile(db.Model):
 #     __tablename__ = "order"
 #     id: Mapped[int] = mapped_column(primary_key=True)
 #     total_amount: Mapped[float] = mapped_column(Float, nullable=False)
-    
+
 #     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
 #     user: Mapped["User"] = relationship(back_populates="orders")
 
