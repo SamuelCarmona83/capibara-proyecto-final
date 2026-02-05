@@ -91,6 +91,13 @@ export const Navbar = () => {
                                 <i className="fa-solid fa-gear"></i> Settings
                                 </Link>
                             </li>
+
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/signup">
+                                <i className="fa-solid fa-user-plus"></i> Sign Up
+                                </Link>
+                            </li>
+
                             
                             <hr/>
                             <li className="nav-item">

@@ -1,8 +1,8 @@
 export const initialStore = () => {
   return {
     shoes: [], // Data from GET /shoes
-    token: null, // The JWT access_token from /login
-    currentUser: {}, // User info (email, id)
+    token: localStorage.getItem("token") || null, // The JWT access_token from /login
+    currentUser: JSON.parse(localStorage.getItem("currentUser")) || null, // User info (email, id)
     profile: {}, // Data from your Profile model
     cart: [], // Items added via /cart
   };
@@ -21,6 +21,8 @@ export default function storeReducer(store, action = {}) {
         signup: false,
       };
     case "logout":
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       return {
         ...store,
         token: null,
@@ -31,6 +33,7 @@ export default function storeReducer(store, action = {}) {
       return {
         ...store,
         token: action.payload.token,
+        user: action.payload.user,
       };
 
     case "update_user":

@@ -26,9 +26,9 @@ export const Profile = () => {
         width="150"
         className="rounded-circle"
       />
-      <p><strong>Name:</strong> {store.user.name}</p>
-      <p><strong>Email:</strong> {store.user.email}</p>
-      <p><strong>Bio:</strong> {store.user.bio}</p>
+      <p><strong>Name:</strong> {store.user?.name || "User"}</p>
+      {/*<p><strong>Email:</strong> {store.user.email}</p>*/}
+      <p><strong>Bio:</strong> {store.user?.bio || "No bio yet"}</p>
     </div>
   );
 };

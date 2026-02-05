@@ -12,21 +12,28 @@ export const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    if (!email  || !password) {
+      alert("Please enter email and password.");
+      return;
+    }
+
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const backend = import.meta.env.VITE_BACKEND_URL?.replace(/\/$/, "");
+      const response = await fetch(`${backend}/api/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+       const data = await response.json();
+
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        alert(data.msg || "Login failed. Please check your credentials.");
+        return;
       }
 
-      const data = await response.json();
+      
 
       // ✅ Save token & user to localStorage (persists after refresh)
       localStorage.setItem("token", data.access_token);
@@ -34,18 +41,16 @@ export const Login = () => {
 
       // ✅ Update global store
       dispatch({
-        type: "login_success",
-        payload: {
-          token: data.access_token,
-        },
+       type: "login_success",
+        payload: { token: data.access_token, user: data.user },
       });
 
       // ✅ Redirect to home after successful login
-      navigate("/");
+      navigate("/profile");
 
     } catch (error) {
       console.error("Login error:", error);
-      alert("Login failed. Please check your credentials.");
+      alert("Login failed (network/server error).");
     }
   };
 

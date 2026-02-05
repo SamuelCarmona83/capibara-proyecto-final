@@ -12,6 +12,7 @@ import { Catalog } from "./pages/Catalog";
 import { Cart } from "./pages/Cart";       
 import { Checkout } from "./pages/Checkout";
 import {Profile} from "./pages/Profile";
+import { Signup } from "./pages/Signup.jsx";
 export const router = createBrowserRouter(
     createRoutesFromElements(
         // Root Route: All navigation will start from here.
@@ -33,6 +34,8 @@ export const router = createBrowserRouter(
             <Route path="/login" element={<Login />} />
 
             <Route path="/profile" element={<Profile />} />
+
+            <Route path="/signup" element={<Signup />} />
         </Route>
     )
 );
