@@ -7,24 +7,20 @@ export const Home = () => {
     const { store, dispatch } = useGlobalReducer();
 
     const loadProducts = async () => {
-        // NOTA: He comentado esto temporalmente para usar los datos de prueba (Mock Data)
-        // del store.js mientras terminas el backend.
-        /* try {
+        try {
             const backendUrl = import.meta.env.VITE_BACKEND_URL;
             if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined");
-            const response = await fetch(backendUrl + "/api/products");
-            if (!response.ok) throw new Error("Error loading products");
+            const response = await fetch(backendUrl + "/api/shoes");
+            if (!response.ok) throw new Error("Error loading shoes");
             const data = await response.json();
-            dispatch({ type: "load_products", payload: data });
+            dispatch({ type: "load_shoes", payload: data });
         } catch (error) {
             console.error("Error cargando productos:", error);
-        } 
-        */
+        }
     };
 
     useEffect(() => {
-        // Solo cargamos si la lista está vacía para no sobrescribir los datos de prueba
-        if(store.products && store.products.length === 0) {
+        if (store.shoes && store.shoes.length === 0) {
             loadProducts();
         }
     }, []);
@@ -100,7 +96,7 @@ export const Home = () => {
             </div>
 
             <div className="container mt-5">
-                
+
                 {/* 2. SECCIÓN DE BENEFICIOS */}
                 <div className="row text-center mb-5 g-4">
                     <div className="col-md-4">
@@ -135,9 +131,8 @@ export const Home = () => {
                 </div>
 
                 <div className="row g-4 mb-5">
-                    {store.products && store.products.length > 0 ? (
-                        // Mostramos solo los primeros 4 productos como "Destacados"
-                        store.products.slice(0, 4).map((product) => (
+                    {store.shoes && store.shoes.length > 0 ? (
+                        store.shoes.slice(0, 4).map((product) => (
                             <div key={product.id} className="col-12 col-md-6 col-lg-3">
                                 <ProductCard product={product} />
                             </div>
@@ -150,7 +145,7 @@ export const Home = () => {
                         </div>
                     )}
                 </div>
-                
+
                 {/* 4. BANNER PROMOCIONAL INFERIOR */}
                 <div className="bg-light p-5 rounded-3 mb-5 text-center">
                     <h2>Únete a nuestro club</h2>

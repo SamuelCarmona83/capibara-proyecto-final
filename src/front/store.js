@@ -1,53 +1,39 @@
 export const initialStore = () => {
   return {
-    message: null,
-    // Agregamos zapatos de prueba aquí para verlos en el catálogo
-    products: [
-      {
-        id: 1,
-        name: "Nike Air Max",
-        price: 120,
-        description: "Comodidad y estilo para correr.",
-        image_url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000&auto=format&fit=crop"
-      },
-      {
-        id: 2,
-        name: "Adidas Ultraboost",
-        price: 140,
-        description: "Energía sin fin para tus pies.",
-        image_url: "https://assets.adidas.com/images/w_600,f_auto,q_auto/f9d5281c107c484fb341aefc00f3426e_9366/Ultraboost_22_Shoes_Black_GX3060_01_standard.jpg"
-      },
-      {
-        id: 3,
-        name: "Puma RS-X",
-        price: 110,
-        description: "Estilo retro reimaginado.",
-        image_url: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/391174/01/sv01/fnd/EEA/fmt/png/Zapatillas-RS-X-Efekt-Turbo"
-      },
-      {
-        id: 4,
-        name: "New Balance 574",
-        price: 90,
-        description: "El clásico más versátil.",
-        image_url: "https://nb.scene7.com/is/image/NB/u574lgvb_nb_02_i?$pdpflexf2$"
-      }
-    ],
-    cart: [],
-    user: null,
-    token: null,
+    shoes: [], // Data from GET /shoes
+    token: null, // The JWT access_token from /login
+    currentUser: {}, // User info (email, id)
+    profile: {}, // Data from your Profile model
+    cart: [], // Items added via /cart
   };
 };
 
 export default function storeReducer(store, action = {}) {
   switch (action.type) {
+    case "signup_success":
+      return {
+        ...store,
+        signup: true,
+      };
+    case "signup_failed":
+      return {
+        ...store,
+        signup: false,
+      };
+    case "logout":
+      return {
+        ...store,
+        token: null,
+        user: null,
+      };
+
     case "login_success":
       return {
         ...store,
-        user: action.payload.user,
         token: action.payload.token,
       };
 
-      case "update_user":
+    case "update_user":
       return {
         ...store,
         user: action.payload,
@@ -60,10 +46,10 @@ export default function storeReducer(store, action = {}) {
       };
 
     // Recibe la lista de zapatos desde la API y actualiza el store
-    case "load_products":
+    case "load_shoes":
       return {
         ...store,
-        products: action.payload, // 'action.payload' será el array de zapatos desde el backend
+        shoes: action.payload, // 'action.payload' será el array de zapatos desde el backend
       };
 
     // Agrega un zapato específico al carrito

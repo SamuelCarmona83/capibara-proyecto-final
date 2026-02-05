@@ -37,7 +37,6 @@ export const Login = () => {
         type: "login_success",
         payload: {
           token: data.access_token,
-          user: data.user,
         },
       });
 
